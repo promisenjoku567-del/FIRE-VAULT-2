@@ -43,22 +43,29 @@
 </head>
 
 <body>
+<div id="loginBox">
+  <h2>🔥 FIRE VAULT ADMIN LOGIN</h2>
+  <input type="password" id="password" placeholder="Enter Admin Password">
+  <button onclick="login()">Login</button>
+</div>
 
-<h1>🔥 FIRE VAULT ADMIN</h1>
+<div id="dashboard" style="display:none;">
+  <h1>🔥 FIRE VAULT ADMIN</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Player ID</th>
-      <th>Package</th>
-      <th>Amount</th>
-      <th>Reference</th>
-      <th>Time</th>
-    </tr>
-  </thead>
+  <table>
+    <thead>
+      <tr>
+        <th>Player ID</th>
+        <th>Package</th>
+        <th>Amount</th>
+        <th>Reference</th>
+        <th>Time</th>
+      </tr>
+    </thead>
 
-  <tbody id="ordersTable"></tbody>
-</table>
+    <tbody id="ordersTable"></tbody>
+  </table>
+</div>
 
 <script>
 
@@ -86,7 +93,7 @@ db.collection("orders")
     snapshot.forEach((doc) => {
       let order = doc.data();
 
-      let row = `
+      table.innerHTML += `
         <tr>
           <td>${order.playerId}</td>
           <td>${order.package}</td>
@@ -95,13 +102,25 @@ db.collection("orders")
           <td>${order.time}</td>
         </tr>
       `;
-
-      table.innerHTML += row;
+      
     });
 
   });
 
+  
 </script>
+const ADMIN_PASSWORD = "1234"; // 🔥 CHANGE THIS LATER
 
+function login() {
+  let input = document.getElementById("password").value;
+
+  if (input === ADMIN_PASSWORD) {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    loadOrders();
+  } else {
+    alert("Wrong password");
+  }
+}
 </body>
 </html>
