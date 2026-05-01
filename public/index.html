@@ -1,206 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Fire Vault</title>
+  <meta charset="UTF-8">
+  <title>FIRE VAULT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ADD THIS BELOW -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-</head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kazking Diamonds</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0a0a0a, #111);
-    color: white;
-}
-
-/* HEADER */
-header {
-    background: #000;
-    padding: 20px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: gold;
-}
-
-/* CONTAINER */
-.container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-}
-
-/* CARD */
-.card {
-    background: #1a1a1a;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
-}
-
-/* INPUT */
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 6px;
-    background: #2a2a2a;
-    color: white;
-}
-
-/* GRID PACKAGES */
-.packages {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.package {
-    background: #222;
-    padding: 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: 1px solid #333;
-    text-align: center;
-}
-
-.package:hover {
-    border-color: gold;
-}
-
-.package.active {
-    border-color: gold;
-    background: #333;
-}
-
-/* BUTTON */
-button {
-    width: 100%;
-    padding: 12px;
-    background: gold;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button:hover {
-    background: orange;
-}
-
-/* RESULT */
-.result {
-    margin-top: 15px;
-    text-align: center;
-    color: lightgreen;
-}
-</style>
+  <!-- Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
 
 <body>
-<img src="./images/logo.png" alt="Logo" width="150">
-<header>🔥 FIRE VAULT SHOP 🔥</header>
 
-<div class="container">
-<div class="card">
+<!-- 🔥 NAVBAR -->
+<header>
+  <h1>🔥 FIRE VAULT</h1>
+</header>
 
-<h3>Enter Player ID</h3>
-<input id="playerId" placeholder="Enter your Free Fire ID">
-
-<h3>Select Package</h3>
-<section class="pricing">
-  <h2>🔥 Diamond Packages</h2>
-  <p>Fast delivery • Safe top-up • Affordable prices</p>
-
-  <div class="pricing-grid">
-
-    <div class="card">
-      <h3>100 Diamonds</h3>
-      <p class="price">₦1,512 ($1.1)</p>
-      <button>Order Now</button>
-    </div>
-
-    <div class="card popular">
-      <h3>310 Diamonds</h3>
-      <p class="price">₦4,536 ($3.3)</p>
-      <button>Order Now</button>
-    </div>
-
-    <div class="card">
-      <h3>520 Diamonds</h3>
-      <p class="price">₦7,560 ($5.5)</p>
-      <button>Order Now</button>
-    </div>
-
-    <div class="card">
-      <h3>1060 Diamonds</h3>
-      <p class="price">₦15,120 ($11)</p>
-      <button>Order Now</button>
-    </div>
-
-  </div>
+<!-- 🎮 HERO -->
+<section class="hero">
+  <h2>Free Fire Diamond Top-Up</h2>
+  <p>Fast • Safe • Instant Delivery</p>
 </section>
-    </div>
-</div>
 
-<button onclick="buy()">Proceed to Payment</button>
+<!-- 🎯 PLAYER ID -->
+<section class="player">
+  <input type="text" id="playerId" placeholder="Enter your Player ID">
+</section>
 
-<div class="result" id="msg"></div>
+<!-- 💎 PRICING -->
+<section class="pricing">
 
-</div>
-</div>
+  <div class="card">
+    <h3>100 Diamonds</h3>
+    <p>₦1,200</p>
+    <button onclick="payWithPaystack(1200)">Buy Now</button>
+  </div>
 
-<script>
-let selectedPackage = null;
-let selectedPrice = null;
+  <div class="card best">
+    <span class="badge">BEST VALUE</span>
+    <h3>310 Diamonds</h3>
+    <p>₦3,500</p>
+    <button onclick="payWithPaystack(3500)">Buy Now</button>
+  </div>
 
-function selectPackage(el, name, price) {
-    document.querySelectorAll(".package").forEach(p => p.classList.remove("active"));
-    el.classList.add("active");
+  <div class="card">
+    <h3>520 Diamonds</h3>
+    <p>₦6,000</p>
+    <button onclick="payWithPaystack(6000)">Buy Now</button>
+  </div>
 
-    selectedPackage = name;
-    selectedPrice = price;
-}
+</section>
 
-async function buy() {
-    let playerId = document.getElementById("playerId").value;
+<!-- ⚡ INFO -->
+<section class="info">
+  <h2>How It Works</h2>
+  <p>Enter Player ID → Pay → Receive Diamonds Instantly</p>
+</section>
 
-    if (!playerId) {
-        return document.getElementById("msg").innerText = "Enter Player ID";
-    }
+<!-- 📞 CONTACT -->
+<section class="contact">
+  <a href="https://wa.me/234XXXXXXXXXX" target="_blank">
+    Order via WhatsApp
+  </a>
+</section>
 
-    if (!selectedPackage) {
-        return document.getElementById("msg").innerText = "Select a package";
-    }
-
-    let res = await fetch("/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            playerId,
-            packageName: selectedPackage,
-            price: selectedPrice
-        })
-    });
-
-    let data = await res.json();
-
-    document.getElementById("msg").innerText =
-    "Order created! ID: " + data.order.id;
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
