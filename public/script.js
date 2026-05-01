@@ -31,7 +31,7 @@ callback: function(response) {
 🆔 Player ID: ${playerId}
 💳 Ref: ${response.reference}`;
 
-  let whatsappLink = `https://wa.me/234XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+  let whatsappLink = `https://wa.me/2349011567827?text=${encodeURIComponent(message)}`;
 
   document.body.innerHTML = `
     <div style="color:white; text-align:center; padding:50px;">
