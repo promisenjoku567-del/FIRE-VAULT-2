@@ -70,43 +70,44 @@
 <script>
 
 // 🔥 YOUR FIREBASE CONFIG (same as script.js)
-const firebaseConfig = {
-  apiKey: "AIzaSyDnwV4nIVyl1roL2jtgc1_YLcvyYCGKj2Y",
-  authDomain: "fire-vault-22555.firebaseapp.com",
-  projectId: "fire-vault-22555",
-  storageBucket: "fire-vault-22555.firebasestorage.app",
-  messagingSenderId: "589168743870",
-  appId: "1:589168743870:web:38210ca30165a196d515ef"
-};
+function loadOrders() {
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+  const firebaseConfig = {
+    apiKey:  "AIzaSyDnwV4nIVyl1roL2jtgc1_YLcvyYCGKj2Y",
+    authDomain: "fire-vault-22555.firebaseapp.com",
+    projectId: "fire-vault-22555",
+    storageBucket: "fire-vault-22555.firebasestorage.app",
+    messagingSenderId: "589168743870",
+    appId:  "1:589168743870:web:38210ca30165a196d515ef"
+  };
 
-// 🔥 LOAD ORDERS
-db.collection("orders")
-  .orderBy("time", "desc")
-  .onSnapshot((snapshot) => {
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
-    let table = document.getElementById("ordersTable");
-    table.innerHTML = "";
+  db.collection("orders")
+    .orderBy("time", "desc")
+    .onSnapshot((snapshot) => {
 
-    snapshot.forEach((doc) => {
-      let order = doc.data();
+      let table = document.getElementById("ordersTable");
+      table.innerHTML = "";
 
-      table.innerHTML += `
-        <tr>
-          <td>${order.playerId}</td>
-          <td>${order.package}</td>
-          <td>₦${order.amount}</td>
-          <td>${order.reference}</td>
-          <td>${order.time}</td>
-        </tr>
-      `;
-      
+      snapshot.forEach((doc) => {
+        let order = doc.data();
+
+        table.innerHTML += `
+          <tr>
+            <td>${order.playerId}</td>
+            <td>${order.package}</td>
+            <td>₦${order.amount}</td>
+            <td>${order.reference}</td>
+            <td>${new Date(order.time).toLocaleString()}</td>
+          </tr>
+        `;
+      });
+
     });
 
-  });
-
+}
   
 </script>
 const ADMIN_PASSWORD = "1234"; // 🔥 CHANGE THIS LATER
