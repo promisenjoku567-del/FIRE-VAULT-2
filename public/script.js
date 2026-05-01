@@ -51,6 +51,22 @@ let adminMessage = `🔥 NEW ORDER RECEIVED
 let adminLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(adminMessage)}`;
 
 window.open(adminLink, "_blank");
+
+// Save order to Firebase
+db.collection("orders").add({
+  playerId: playerId,
+  package: packageName,
+  reference: response.reference,
+  amount: amount,
+  status: "paid",
+  time: new Date().toLocaleString()
+})
+.then(() => {
+  console.log("Order saved to Firebase");
+})
+.catch((error) => {
+  console.error("Error saving order:", error);
+});
   
 let order = {
   playerId: playerId,
