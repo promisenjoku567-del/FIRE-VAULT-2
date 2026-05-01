@@ -29,6 +29,8 @@ callback: function(response) {
 
 💎 Package: ${packageName}
 🆔 Player ID: ${playerId}
+
+⚠️ I have completed payment
 💳 Ref: ${response.reference}`;
 
   let whatsappLink = `https://wa.me/2349011567827?text=${encodeURIComponent(message)}`;
