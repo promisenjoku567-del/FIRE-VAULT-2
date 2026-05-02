@@ -38,70 +38,37 @@ function payWithPaystack(amount, packageName) {
       ]
     },
 
-callback: function(response) {
-let adminNumber = "2349011567827";
+    callback: function(response) {
 
-let adminMessage = `🔥 NEW ORDER RECEIVED
-
+      let message = `🔥 FIRE VAULT ORDER
 💎 Package: ${packageName}
 🆔 Player ID: ${playerId}
-💳 Ref: ${response.reference}
-⏰ Time: ${new Date().toLocaleString()}`;
-
-let adminLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(adminMessage)}`;
-
-window.open(adminLink, "_blank");
-
-// Save order to Firebase
-db.collection("orders").add({
-  playerId: playerId,
-  package: packageName,
-  reference: response.reference,
-  amount: amount,
-  status: "paid",
-  time: new Date().toLocaleString()
-  status: "Pending"
-})
-.then(() => {
-  console.log("Order saved to Firebase");
-})
-.catch((error) => {
-  console.error("Error saving order:", error);
-});
-  
-let order = {
-  playerId: playerId,
-  package: packageName,
-  reference: response.reference,
-  time: new Date().toLocaleString()
-};
-
-orders.push(order);
-
-console.log("New Order:", order);
-  
-  let message = `🔥 FIRE VAULT ORDER
-
-💎 Package: ${packageName}
-🆔 Player ID: ${playerId}
-
-⚠️ I have completed payment
 💳 Ref: ${response.reference}`;
 
-  let whatsappLink = `https://wa.me/2349011567827?text=${encodeURIComponent(message)}`;
+      db.collection("orders").add({
+        playerId: playerId,
+        package: packageName,
+        reference: response.reference,
+        amount: amount,
+        status: "Pending",
+        time: Date.now()
+      });
 
-  document.body.innerHTML = `
-    <div style="color:white; text-align:center; padding:50px;">
-      <h1>✅ Payment Successful!</h1>
-      <p>Redirecting you to WhatsApp...</p>
-    </div>
-  `;
+      document.body.innerHTML = `
+        <div style="color:white; text-align:center; padding:50px;">
+          <h1>✅ Payment Successful!</h1>
+          <p>Redirecting to WhatsApp...</p>
+        </div>
+      `;
 
-  setTimeout(() => {
-    window.location.href = whatsappLink;
-  }, 3000);
-}
+      setTimeout(() => {
+        window.location.href =
+          "https://wa.me/2349011567827?text=" +
+          encodeURIComponent(message);
+      }, 3000);
+
+    }
   });
 
   handler.openIframe();
-    }
+}
