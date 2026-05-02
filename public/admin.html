@@ -184,10 +184,10 @@ const db = firebase.firestore();
 
 function loadOrders() {
 
-document.getElementById("totalOrders").innerText = total;
-document.getElementById("pendingOrders").innerText = pending;
-document.getElementById("totalRevenue").innerText = "₦" + revenue;
-  
+  let total = 0;
+  let pending = 0;
+  let revenue = 0;
+
   db.collection("orders")
     .orderBy("time", "desc")
     .onSnapshot((snapshot) => {
@@ -198,13 +198,13 @@ document.getElementById("totalRevenue").innerText = "₦" + revenue;
       snapshot.forEach((doc) => {
         let order = doc.data();
 
-total++;
-  revenue += Number(order.amount);
+        total++;
+        revenue += Number(order.amount);
 
-  if(order.status !== "Delivered"){
-    pending++;
-  }
-        
+        if(order.status !== "Delivered"){
+          pending++;
+        }
+
         table.innerHTML += `
           <tr>
             <td>${order.playerId}</td>
@@ -222,15 +222,15 @@ total++;
         `;
       });
 
+      document.getElementById("totalOrders").innerText = total;
+      document.getElementById("pendingOrders").innerText = pending;
+      document.getElementById("totalRevenue").innerText = "₦" + revenue;
+
     });
 
 }
+```
 
-function markDelivered(id){
-  db.collection("orders").doc(id).update({
-    status: "Delivered"
-  });
-}
 
 </script>
 
