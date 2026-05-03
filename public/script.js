@@ -41,12 +41,13 @@ function payWithPaystack(amount, packageName) {
       ]
     },
 
-   callback: function(response) {
+  callback: function(response) {
 
   let uid = document.getElementById("uid").value;
   let pkg = document.getElementById("package").value;
   let phone = document.getElementById("phone").value;
 
+  // Firebase (if you already added it earlier)
   db.ref("orders").push({
     uid: uid,
     package: pkg,
@@ -54,6 +55,29 @@ function payWithPaystack(amount, packageName) {
     reference: response.reference,
     status: "paid"
   });
+
+  // EMAIL RECEIPT (EmailJS)
+  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+    uid: uid,
+    package: pkg,
+    reference: response.reference,
+    phone: phone
+  });
+
+  // WHATSAPP RECEIPT (opens chat)
+  let message =
+`🔥 FIRE VAULT RECEIPT
+
+UID: ${uid}
+Package: ${pkg}
+Reference: ${response.reference}
+Status: PAID`;
+
+  let whatsappLink = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+
+  setTimeout(() => {
+    window.open(whatsappLink, "_blank");
+  }, 800);
 
   alert("Payment successful!");
 }
