@@ -116,10 +116,9 @@ Thank you for your order`;
 
 function updateSummary() {
   let uid = document.getElementById("uid").value;
-  let pkg = document.getElementById("package").value;
 
   document.getElementById("summaryText").innerText =
-    `UID: ${uid || "-"} | Package: ${pkg || "-"}`;
+    `UID: ${uid || "-"}`;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
