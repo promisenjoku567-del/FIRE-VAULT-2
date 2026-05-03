@@ -1,137 +1,246 @@
-////////////////////////////////////////////////////
-// 🔥 FIREBASE CONFIG
-////////////////////////////////////////////////////
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/png" href="logo.png?v=3">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIRE VAULT</title>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDnwV4nIVyl1roL2jtgc1_YLcvyYCGKj2Y",
-  authDomain: "fire-vault-22555.firebaseapp.com",
-  databaseURL: "https://fire-vault-22555-default-rtdb.firebaseio.com",
-  projectId: "fire-vault-22555",
-  storageBucket: "fire-vault-22555.firebasestorage.app",
-  messagingSenderId: "589168743870",
-  appId: "1:589168743870:web:38210ca30165a196d515ef"
-};
+<link rel="stylesheet" href="style.css">
 
-firebase.initializeApp(firebaseConfig);
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
 
-// ✔ USE REALTIME DATABASE (NOT FIRESTORE)
-const db = firebase.database();
-
-emailjs.init("VDr9l4ponPdlPMFLS");
-
-////////////////////////////////////////////////////
-// 💳 PAYSTACK PAYMENT
-////////////////////////////////////////////////////
-
-function payWithPaystack(amount, packageName) {
-
-  let uid = document.getElementById("uid").value;
-  let phone = document.getElementById("phone").value;
-
-  let message = `🔥 Fire Vault Order:
-UID: ${uid}
-Package: ${packageName}
-Reference: ${response.reference}
-Status: PAID`;
-
-  let handler = PaystackPop.setup({
-    key: "pk_test_3759303d3db8720fd0eb95b29004450980f0a4db",
-    email: "test@gmail.com",
-    amount: amount * 100,
-    currency: "NGN",
-
-    callback: function(response) {
-
-      ////////////////////////////////////////////////////
-      // 💾 SAVE TO FIREBASE
-      ////////////////////////////////////////////////////
-
-      db.ref("orders").push({
-        uid: uid,
-        package: packageName,
-        phone: phone,
-        reference: response.reference,
-        status: "paid"
-      });
-
-      ////////////////////////////////////////////////////
-      // 📧 EMAILJS RECEIPT
-      ////////////////////////////////////////////////////
-
-      emailjs.send("service_zjapyfh", "template_478nbiy", {
-        uid: uid,
-        package: packageName,
-        reference: response.reference,
-        phone: phone
-      });
-
-      ////////////////////////////////////////////////////
-      // 📱 SUCCESS SCREEN
-      ////////////////////////////////////////////////////
-
-      document.body.innerHTML = `
-        <div style="color:white; text-align:center; padding:50px;">
-          <h1>✅ Payment Successful!</h1>
-          <p>Redirecting to WhatsApp...</p>
-        </div>
-      `;
-
-      setTimeout(() => {
-        window.location.href =
-          "https://wa.me/2349011567827?text=" +
-          encodeURIComponent(message);
-      }, 3000);
-    }
-  });
-
-  handler.openIframe();
+<style>
+body {
+  background: #000;
+  color: white;
+  font-family: Arial, sans-serif;
 }
 
-////////////////////////////////////////////////////
-// 📊 SUMMARY UPDATE
-////////////////////////////////////////////////////
-
-function updateSummary() {
-  let uid = document.getElementById("uid").value;
-  let pkg = document.getElementById("package").value;
-
-  document.getElementById("summaryText").innerText =
-    `UID: ${uid || "-"} | Package: ${pkg || "-"}`;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  padding: 15px 20px;
+  border-bottom: 2px solid gold;
 }
 
-document.getElementById("uid").addEventListener("input", updateSummary);
-document.getElementById("package").addEventListener("change", updateSummary);
+.navbar h2 { color: gold; }
 
-////////////////////////////////////////////////////
-// 📦 POPUP
-////////////////////////////////////////////////////
-
-function showPopup(packageName, price) {
-  document.getElementById("popup").style.display = "block";
-  document.getElementById("popupTitle").innerText = packageName;
-  document.getElementById("popupPrice").innerText = price;
+.menu-icon {
+  font-size: 28px;
+  color: gold;
+  cursor: pointer;
 }
 
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background: #111;
+  border: 2px solid gold;
+  border-radius: 10px;
+  padding: 15px;
 }
 
-////////////////////////////////////////////////////
-// 📱 WHATSAPP ORDER (MANUAL OPTION)
-////////////////////////////////////////////////////
+.nav-links.show { display: flex; }
 
-function submitOrder() {
-  let uid = document.getElementById("uid").value;
-  let pkg = document.getElementById("package").value;
-  let phone = document.getElementById("phone").value;
-
-  let message = `Fire Vault Order:
-UID: ${uid}
-Package: ${pkg}
-Phone: ${phone}`;
-
-  window.open(
-    "https://wa.me/2349011567827?text=" + encodeURIComponent(message),
-    "_blank"
-  );
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin: 10px 0;
 }
+
+header {
+  text-align: center;
+  padding: 20px;
+}
+
+.order-form {
+  text-align: center;
+  padding: 40px;
+}
+
+.order-form input,
+.order-form select {
+  width: 80%;
+  padding: 14px;
+  margin: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  background: gold;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.pricing-card {
+  background: #111;
+  border: 2px solid gold;
+  margin: 20px auto;
+  padding: 20px;
+  width: 80%;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.summary {
+  text-align: center;
+  background: #111;
+  border: 2px solid gold;
+  margin: 20px auto;
+  padding: 15px;
+  width: 80%;
+  border-radius: 10px;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.8);
+}
+
+.popup-content {
+  background:#111;
+  border:2px solid gold;
+  width:300px;
+  margin:100px auto;
+  padding:30px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: green;
+  color: white;
+  font-size: 28px;
+  padding: 15px;
+  border-radius: 50%;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+<h2>🔥 Fire Vault</h2>
+
+<div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+<div class="nav-links" id="navLinks">
+<a href="home.html">Home</a>
+<a href="freefire.html">Free Fire</a>
+</div>
+</nav>
+
+<header>
+<h1>🔥 FIRE VAULT</h1>
+<p>Free Fire Diamond Top-Up</p>
+<p>Fast • Safe • Instant Delivery</p>
+</header>
+
+<div style="text-align:center;">
+<p>✅ Instant Top-Up</p>
+<p>🔒 Secure Payment</p>
+<p>⚡ 24/7 Delivery</p>
+</div>
+
+<section class="order-form">
+<h2>Place Your Order</h2>
+
+<div class="summary">
+<h3>Order Summary</h3>
+<p id="summaryText">Fill the form to see details</p>
+</div>
+
+<input type="text" id="uid" placeholder="Enter Free Fire UID">
+
+<select id="package">
+<option>100 Diamonds - ₦1,512</option>
+<option>310 Diamonds - ₦4,536</option>
+<option>520 Diamonds - ₦7,560</option>
+<option>1060 Diamonds - ₦15,120</option>
+</select>
+
+<input type="text" id="phone" placeholder="WhatsApp Number">
+
+<button onclick="submitOrder()">Proceed to Checkout</button>
+</section>
+
+<section>
+
+<div class="pricing-card">
+<h3>💎 100 Diamonds</h3>
+<p>₦1,512</p>
+<button onclick="payWithPaystack(1512, '100 Diamonds')">Buy Now</button>
+</div>
+
+<div class="pricing-card">
+<h3>💎 310 Diamonds</h3>
+<p>₦4,536</p>
+<button onclick="payWithPaystack(4536, '310 Diamonds')">Buy Now</button>
+</div>
+
+<div class="pricing-card">
+<h3>💎 520 Diamonds</h3>
+<p>₦7,560</p>
+<button onclick="payWithPaystack(7560, '520 Diamonds')">Buy Now</button>
+</div>
+
+<div class="pricing-card">
+<h3>💎 1060 Diamonds</h3>
+<p>₦15,120</p>
+<button onclick="payWithPaystack(15120, '1060 Diamonds')">Buy Now</button>
+</div>
+
+</section>
+
+<section style="text-align:center; margin:30px;">
+<a href="https://wa.me/2349011567827" target="_blank">
+Order via WhatsApp
+</a>
+</section>
+
+<div id="popup" class="popup">
+<div class="popup-content">
+<h2 id="popupTitle"></h2>
+<p id="popupPrice"></p>
+<button onclick="closePopup()">Close</button>
+</div>
+</div>
+
+<footer style="text-align:center; padding:20px;">
+© 2026 Fire Vault | Fast & Secure Diamond Top-Up
+</footer>
+
+<a href="https://wa.me/2349011567827" class="whatsapp-float">💬</a>
+
+<script>
+function toggleMenu() {
+document.getElementById("navLinks").classList.toggle("show");
+}
+</script>
+
+<script src="script.js"></script>
+
+</body>
+</html>
