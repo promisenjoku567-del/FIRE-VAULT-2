@@ -1,203 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="logo.png?v=3">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FIRE VAULT</title>
+<link rel="icon" type="image/png" href="logo.png?v=3">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIRE VAULT</title>
 
-  <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
-  <!-- External Scripts -->
-  <script src="https://js.paystack.co/v1/inline.js"></script>
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
 
-  <style>
-    body {
-      background: #000;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
+<style>
+body {
+  background: #000;
+  color: white;
+  font-family: Arial, sans-serif;
+}
 
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      padding: 15px 20px;
-      background: #111;
-      border-bottom: 2px solid gold;
-    }
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  padding: 15px 20px;
+  border-bottom: 2px solid gold;
+}
 
-    .menu-icon {
-      color: gold;
-      font-size: 28px;
-      cursor: pointer;
-    }
+.navbar h2 { color: gold; }
 
-    .nav-links {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 70px;
-      right: 20px;
-      background: #111;
-      border: 2px solid gold;
-      padding: 15px;
-      border-radius: 10px;
-    }
+.menu-icon {
+  font-size: 28px;
+  color: gold;
+  cursor: pointer;
+}
 
-    .nav-links.show {
-      display: flex;
-    }
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background: #111;
+  border: 2px solid gold;
+  border-radius: 10px;
+  padding: 15px;
+}
 
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      margin: 10px 0;
-    }
+.nav-links.show { display: flex; }
 
-    .pricing-card {
-      background: #111;
-      border: 2px solid gold;
-      margin: 20px auto;
-      padding: 20px;
-      width: 80%;
-      border-radius: 12px;
-    }
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin: 10px 0;
+}
 
-    button {
-      background: gold;
-      border: none;
-      padding: 12px;
-      width: 80%;
-      margin-top: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 8px;
-    }
+header {
+  text-align: center;
+  padding: 20px;
+}
 
-    input, select {
-      width: 80%;
-      padding: 14px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-    }
+.order-form {
+  text-align: center;
+  padding: 40px;
+}
 
-    .summary {
-      background: #111;
-      border: 2px solid gold;
-      width: 80%;
-      margin: 20px auto;
-      padding: 15px;
-      border-radius: 10px;
-    }
+.order-form input,
+.order-form select {
+  width: 80%;
+  padding: 14px;
+  margin: 10px;
+  border-radius: 8px;
+  border: none;
+}
 
-    .popup {
-      display: none;
-      position: fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background: rgba(0,0,0,0.8);
-    }
+button {
+  background: gold;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+}
 
-    .popup-content {
-      background:#111;
-      border:2px solid gold;
-      width:300px;
-      margin:100px auto;
-      padding:30px;
-      border-radius:15px;
-    }
-  </style>
+.pricing-card {
+  background: #111;
+  border: 2px solid gold;
+  margin: 20px auto;
+  padding: 20px;
+  width: 80%;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.summary {
+  text-align: center;
+  background: #111;
+  border: 2px solid gold;
+  margin: 20px auto;
+  padding: 15px;
+  width: 80%;
+  border-radius: 10px;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.8);
+}
+
+.popup-content {
+  background:#111;
+  border:2px solid gold;
+  width:300px;
+  margin:100px auto;
+  padding:30px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: green;
+  color: white;
+  font-size: 28px;
+  padding: 15px;
+  border-radius: 50%;
+  text-decoration: none;
+}
+</style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
-  <h2>🔥 Fire Vault</h2>
-  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+<h2>🔥 Fire Vault</h2>
 
-  <div class="nav-links" id="navLinks">
-    <a href="home.html">Home</a>
-    <a href="freefire.html">Free Fire</a>
-  </div>
+<div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+<div class="nav-links" id="navLinks">
+<a href="home.html">Home</a>
+<a href="freefire.html">Free Fire</a>
+</div>
 </nav>
 
 <header>
-  <h1>🔥 FIRE VAULT</h1>
-  <p>Fast • Safe • Instant Delivery</p>
+<h1>🔥 FIRE VAULT</h1>
+<p>Free Fire Diamond Top-Up</p>
+<p>Fast • Safe • Instant Delivery</p>
 </header>
 
-<!-- ORDER FORM -->
-<section>
-  <input type="text" id="uid" placeholder="Enter Free Fire UID">
+<div style="text-align:center;">
+<p>✅ Instant Top-Up</p>
+<p>🔒 Secure Payment</p>
+<p>⚡ 24/7 Delivery</p>
+</div>
 
-  <select id="package">
-    <option>100 Diamonds - ₦1,512</option>
-    <option>310 Diamonds - ₦4,536</option>
-    <option>520 Diamonds - ₦7,560</option>
-    <option>1060 Diamonds - ₦15,120</option>
-  </select>
-
-  <input type="text" id="phone" placeholder="WhatsApp Number">
-</section>
+<section class="order-form">
+<h2>Place Your Order</h2>
 
 <div class="summary">
-  <h3>Order Summary</h3>
-  <p id="summaryText">Fill the form to see details</p>
+<h3>Order Summary</h3>
+<p id="summaryText">Fill the form to see details</p>
 </div>
 
-<!-- PRICING -->
+<input type="text" id="uid" placeholder="Enter Free Fire UID">
+
+<select id="package">
+<option>100 Diamonds - ₦1,512</option>
+<option>310 Diamonds - ₦4,536</option>
+<option>520 Diamonds - ₦7,560</option>
+<option>1060 Diamonds - ₦15,120</option>
+</select>
+
+<input type="text" id="phone" placeholder="WhatsApp Number">
+
+<button onclick="submitOrder()">Proceed to Checkout</button>
+</section>
+
 <section>
 
 <div class="pricing-card">
-  <h3>💎 100 Diamonds</h3>
-  <p>₦1,512</p>
-  <button onclick="payWithPaystack(1512, '100 Diamonds')">Buy Now</button>
+<h3>💎 100 Diamonds</h3>
+<p>₦1,512</p>
+<button onclick="payWithPaystack(1512, '100 Diamonds')">Buy Now</button>
 </div>
 
 <div class="pricing-card">
-  <h3>💎 310 Diamonds</h3>
-  <p>₦4,536</p>
-  <button onclick="payWithPaystack(4536, '310 Diamonds')">Buy Now</button>
+<h3>💎 310 Diamonds</h3>
+<p>₦4,536</p>
+<button onclick="payWithPaystack(4536, '310 Diamonds')">Buy Now</button>
 </div>
 
 <div class="pricing-card">
-  <h3>💎 520 Diamonds</h3>
-  <p>₦7,560</p>
-  <button onclick="payWithPaystack(7560, '520 Diamonds')">Buy Now</button>
+<h3>💎 520 Diamonds</h3>
+<p>₦7,560</p>
+<button onclick="payWithPaystack(7560, '520 Diamonds')">Buy Now</button>
 </div>
 
 <div class="pricing-card">
-  <h3>💎 1060 Diamonds</h3>
-  <p>₦15,120</p>
-  <button onclick="payWithPaystack(15120, '1060 Diamonds')">Buy Now</button>
+<h3>💎 1060 Diamonds</h3>
+<p>₦15,120</p>
+<button onclick="payWithPaystack(15120, '1060 Diamonds')">Buy Now</button>
 </div>
 
 </section>
 
-<!-- POPUP -->
+<section style="text-align:center; margin:30px;">
+<a href="https://wa.me/2349011567827" target="_blank">
+Order via WhatsApp
+</a>
+</section>
+
 <div id="popup" class="popup">
-  <div class="popup-content">
-    <h2 id="popupTitle"></h2>
-    <p id="popupPrice"></p>
-    <button onclick="closePopup()">Close</button>
-  </div>
+<div class="popup-content">
+<h2 id="popupTitle"></h2>
+<p id="popupPrice"></p>
+<button onclick="closePopup()">Close</button>
+</div>
 </div>
 
-<footer>
-  © 2026 Fire Vault | Fast & Secure Diamond Top-Up
+<footer style="text-align:center; padding:20px;">
+© 2026 Fire Vault | Fast & Secure Diamond Top-Up
 </footer>
+
+<a href="https://wa.me/2349011567827" class="whatsapp-float">💬</a>
 
 <script>
 function toggleMenu() {
-  document.getElementById("navLinks").classList.toggle("show");
+document.getElementById("navLinks").classList.toggle("show");
 }
 </script>
 
