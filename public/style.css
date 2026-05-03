@@ -161,3 +161,22 @@ footer {
 a {
   text-decoration: none;
 }
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 50px 20px;
+  flex-wrap: wrap;
+}
+
+.feature {
+  background: #111;
+  color: gold;
+  padding: 20px;
+  border: 2px solid gold;
+  border-radius: 12px;
+  width: 200px;
+  text-align: center;
+  font-weight: bold;
+}
