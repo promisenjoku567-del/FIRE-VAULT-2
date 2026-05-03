@@ -16,71 +16,42 @@ let orders = [];
 let total = 0;
 let pending = 0;
 let revenue = 0;
+<script>
 function payWithPaystack(amount, packageName) {
 
-  let playerId = document.getElementById("playerId").value;
-
-  if (playerId === "") {
-    alert("Please enter your Player ID");
-    return;
-  }
+  let uid = document.getElementById("uid").value;
+  let phone = document.getElementById("phone").value;
 
   let handler = PaystackPop.setup({
     key: 'pk_test_3759303d3db8720fd0eb95b29004450980f0a4db',
-    email: "customer@email.com",
+    email: "test@gmail.com",
     amount: amount * 100,
     currency: "NGN",
 
-    metadata: {
-      custom_fields: [
-        {
-          display_name: "Player ID",
-          variable_name: "player_id",
-          value: playerId
-        }
-      ]
-    },
+    callback: function(response) {
 
-  callback: function(response) {
+      // Firebase save
+      db.ref("orders").push({
+        uid: uid,
+        package: packageName,
+        phone: phone,
+        reference: response.reference,
+        status: "paid"
+      });
 
-  let uid = document.getElementById("uid").value;
-  let pkg = document.getElementById("package").value;
-  let phone = document.getElementById("phone").value;
+      // EmailJS
+      emailjs.send("service_zjapyfh", "template_478nbiy", {
+        uid: uid,
+        package: packageName,
+        reference: response.reference,
+        phone: phone
+      });
 
-  // Firebase (if you already added it earlier)
-  db.ref("orders").push({
-    uid: uid,
-    package: pkg,
-    phone: phone,
-    reference: response.reference,
-    status: "paid"
+      alert("Payment successful!");
+    }
   });
 
-  // EMAIL RECEIPT (EmailJS)
-  emailjs.send("service_zjapyfh", "template_478nbiy", {
-    uid: uid,
-    package: pkg,
-    reference: response.reference,
-    phone: phone
-  });
-
-  // WHATSAPP RECEIPT (opens chat)
-  let message =
-`🔥 FIRE VAULT RECEIPT
-
-UID: ${uid}
-Package: ${pkg}
-Reference: ${response.reference}
-Status: PAID`;
-
-  let whatsappLink = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
-
-  setTimeout(() => {
-    window.open(whatsappLink, "_blank");
-  }, 800);
-
-  alert("Payment successful!");
-}
+</script>
       document.body.innerHTML = `
         <div style="color:white; text-align:center; padding:50px;">
           <h1>✅ Payment Successful!</h1>
