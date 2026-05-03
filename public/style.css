@@ -2,10 +2,10 @@ body {
   margin: 0;
   font-family: Arial;
   color: white;
-  background: 
-    linear-gradient(rgba(11,11,11,0.88), rgba(11,11,11,0.88)),
+  background:
+    linear-gradient(rgba(11,11,11,0.90), rgba(11,11,11,0.90)),
     url("logo.png");
-  background-size: 500px;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
