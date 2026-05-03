@@ -5,6 +5,7 @@
 const firebaseConfig = {
   apiKey: "AIzaSyDnwV4nIVyl1roL2jtgc1_YLcvyYCGKj2Y",
   authDomain: "fire-vault-22555.firebaseapp.com",
+  databaseURL: "https://fire-vault-22555-default-rtdb.firebaseio.com",
   projectId: "fire-vault-22555",
   storageBucket: "fire-vault-22555.firebasestorage.app",
   messagingSenderId: "589168743870",
@@ -30,7 +31,7 @@ function payWithPaystack(amount, packageName) {
   let message = `🔥 Fire Vault Order:
 UID: ${uid}
 Package: ${packageName}
-Reference: PAYMENT
+Reference: ${response.reference}
 Status: PAID`;
 
   let handler = PaystackPop.setup({
