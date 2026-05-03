@@ -184,3 +184,27 @@ a {
   text-align: center;
   font-weight: bold;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: #111;
+  border-bottom: 2px solid gold;
+}
+
+.navbar h2 {
+  color: gold;
+}
+
+.navbar a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  color: gold;
+}
