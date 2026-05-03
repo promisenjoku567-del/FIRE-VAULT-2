@@ -164,26 +164,21 @@ button {
 <p>⚡ 24/7 Delivery</p>
 </div>
 
-<section class="order-form">
-<h2>Place Your Order</h2>
+<section style="text-align:center; margin:30px;">
 
-<div class="summary">
-<h3>Order Summary</h3>
-<p id="summaryText">Fill the form to see details</p>
-</div>
+  <h2>Enter Your Player UID</h2>
 
-<input type="text" id="uid" placeholder="Enter Free Fire UID">
+  <input 
+    type="text" 
+    id="uid" 
+    placeholder="Enter Free Fire UID"
+    style="width:80%; padding:14px; border-radius:8px; border:none;"
+  >
 
-<select id="package">
-<option>100 Diamonds - ₦1,512</option>
-<option>310 Diamonds - ₦4,536</option>
-<option>520 Diamonds - ₦7,560</option>
-<option>1060 Diamonds - ₦15,120</option>
-</select>
+  <p id="summaryText" style="margin-top:10px;">
+    UID will appear here
+  </p>
 
-<input type="text" id="phone" placeholder="WhatsApp Number">
-
-<button onclick="submitOrder()">Proceed to Checkout</button>
 </section>
 
 <section>
