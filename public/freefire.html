@@ -206,5 +206,14 @@ function toggleMenu() {
   document.getElementById("navLinks").classList.toggle("show");
 }
 </script>
+
+ <div class="popup" id="popup">
+  <div class="popup-content">
+    <h2 id="popupTitle"></h2>
+    <p id="popupPrice"></p>
+    <a id="popupBtn" class="checkout-btn">Proceed to Checkout</a>
+    <button onclick="closePopup()">Close</button>
+  </div>
+</div>
 </body>
 </html>
