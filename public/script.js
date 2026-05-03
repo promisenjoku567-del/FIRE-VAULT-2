@@ -57,7 +57,7 @@ function payWithPaystack(amount, packageName) {
   });
 
   // EMAIL RECEIPT (EmailJS)
-  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+  emailjs.send("service_zjapyfh", "template_478nbiy", {
     uid: uid,
     package: pkg,
     reference: response.reference,
