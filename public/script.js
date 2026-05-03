@@ -124,7 +124,6 @@ function updateSummary() {
 document.addEventListener("DOMContentLoaded", function () {
 
   const uidInput = document.getElementById("uid");
-  const packageInput = document.getElementById("package");
 
   if (uidInput) {
     uidInput.addEventListener("input", updateSummary);
