@@ -330,5 +330,24 @@ WhatsApp: ${phone}`;
   );
 }
 </script>
+
+ <script>
+function payWithPaystack() {
+  let handler = PaystackPop.setup({
+    key: 'YOUR_PUBLIC_KEY_HERE',
+    email: document.getElementById("phone").value + "@gmail.com",
+    amount: 151200, // ₦1,512 in kobo
+    currency: "NGN",
+    callback: function(response) {
+      alert("Payment successful! Ref: " + response.reference);
+    },
+    onClose: function() {
+      alert("Payment cancelled");
+    }
+  });
+
+  handler.openIframe();
+}
+</script>
 </body>
 </html>
