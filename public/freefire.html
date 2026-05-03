@@ -7,6 +7,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  padding: 15px 20px;
+  border-bottom: 2px solid gold;
+}
+
+.navbar h2 {
+  color: gold;
+}
+
+.menu-icon {
+  font-size: 28px;
+  color: gold;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background: #111;
+  border: 2px solid gold;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin: 10px 0;
+}
+
+.nav-links.show {
+  display: flex;
+}
+ 
     body {
       opacity: 0;
       animation: fadeIn 0.8s forwards;
