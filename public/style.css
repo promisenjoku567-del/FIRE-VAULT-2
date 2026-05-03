@@ -102,6 +102,21 @@ button:hover {
   font-size: 20px;
 }
 
+.pricing {
+  text-align: center;
+  padding: 40px;
+}
+
+.pricing-card {
+  background: #111;
+  border: 2px solid gold;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px auto;
+  width: 250px;
+  color: white;
+}
+
 footer {
   background: #111;
   color: gold;
