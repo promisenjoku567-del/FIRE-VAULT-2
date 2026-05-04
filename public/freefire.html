@@ -185,25 +185,25 @@ button {
 <div class="pricing-card">
 <h3>💎 100 Diamonds</h3>
 <p>₦1,512</p>
-<button onclick="payWithPaystack(1512, '100 Diamonds')">Buy Now</button>
+<button onclick="openCheckout(1512, '100 Diamonds')">Buy Now</button>
 </div>
 
 <div class="pricing-card">
 <h3>💎 310 Diamonds</h3>
 <p>₦4,536</p>
-<button onclick="payWithPaystack(4536, '310 Diamonds')">Buy Now</button>
+<button onclick="openCheckout(4536, '310 Diamonds')">Buy Now</button>
 </div>
 
 <div class="pricing-card">
 <h3>💎 520 Diamonds</h3>
 <p>₦7,560</p>
-<button onclick="payWithPaystack(7560, '520 Diamonds')">Buy Now</button>
+<button onclick="openCheckout(7560, '520 Diamonds')">Buy Now</button>
 </div>
 
 <div class="pricing-card">
 <h3>💎 1060 Diamonds</h3>
 <p>₦15,120</p>
-<button onclick="payWithPaystack(15120, '1060 Diamonds')">Buy Now</button>
+<button onclick="openCheckout(15120, '1060 Diamonds')">Buy Now</button>
 </div>
 
 </section>
@@ -233,6 +233,27 @@ function toggleMenu() {
 document.getElementById("navLinks").classList.toggle("show");
 }
 </script>
+
+  <div id="checkout" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8);">
+
+  <div style="background:#111; border:2px solid gold; width:300px; margin:120px auto; padding:20px; text-align:center; border-radius:12px;">
+
+    <h2 id="pkgName">Package</h2>
+    <p id="pkgPrice">Price</p>
+
+    <input type="text" id="popupUid" placeholder="Enter UID" style="width:90%; padding:10px; margin:10px;">
+
+    <button id="payBtn" style="background:gold; padding:10px; width:90%; border:none; cursor:pointer;">
+      Pay Now
+    </button>
+
+    <br><br>
+    <button onclick="closeCheckout()" style="background:red; color:white; padding:8px; border:none;">
+      Close
+    </button>
+
+  </div>
+</div>
 
 <script src="script.js"></script>
 
